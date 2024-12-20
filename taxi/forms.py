@@ -1,9 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelMultipleChoiceField
 
-from taxi.models import Driver
+from taxi.models import Driver, Car
 
 
 class DriverLicenseUpdateForm(forms.ModelForm):
@@ -16,7 +15,7 @@ class DriverLicenseUpdateForm(forms.ModelForm):
 
         if len(license_number) != 8:
             raise forms.ValidationError(
-                "License number must be at least 8 symbols"
+                "License number must be 8 symbols long"
             )
         elif not (
                 license_number[:3].isalpha() and license_number[:3].isupper()
@@ -46,5 +45,5 @@ class CarForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Driver
+        model = Car
         fields = "__all__"

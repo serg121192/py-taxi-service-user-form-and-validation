@@ -75,12 +75,11 @@ class CarDetailView(LoginRequiredMixin, generic.DetailView):
     def post(self, request, *args, **kwargs):
         car = self.get_object()
         if "assign" in request.POST:
-            print(request.POST, request.user)
             car.drivers.add(request.user)
         elif "delete" in request.POST:
             car.drivers.remove(request.user)
         else:
-            raise PermissionDenied
+            raise PermissionDenied("Undefined action")
 
         return redirect(reverse("taxi:car-detail", kwargs={"pk": car.pk}))
 
